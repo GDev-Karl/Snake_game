@@ -14,7 +14,7 @@ class Snake:
 
         """ Serpent"""
         self.body = [Vector2(5, 10), Vector2(6, 10), Vector2(7, 10)]
-        self.direction = Vector2(1, 0)
+        self.direction = Vector2(1, 0) #indique la direction de deplacement du serpent
 
     def draw(self):
 
@@ -22,13 +22,13 @@ class Snake:
         for block in self.body:
             x = block.x * size
             y = block.y * size
-            snake_rect = pygame.Rect(x, y, size, size)
+            snake_rect = pygame.Rect(x, y , size, size)
             pygame.draw.rect(screen, (123, 123, 156), snake_rect)
 
-    def move(self): # A revoir et a refaire 
+    def move(self):
 
         """ deplacement du serpent """
-        body_copy = self.body[:-1]
+        body_copy = self.body[:-1] #on recupère tout les éléments de la liste sauf le dernier
         body_copy.insert(0, body_copy[0] + self.direction)
         self.body = body_copy[:]
 
@@ -37,8 +37,8 @@ class Apple:
     def __init__(self):
 
         """ dessin de la pomme à l'ecran """
-        self.x = 1
-        self.y = 1
+        self.x = random.randint(0, number - 1)
+        self.y = random.randint(0, number - 1)
         self.pos = Vector2(self.x, self.y)
 
     def draw(self):
@@ -48,6 +48,7 @@ class Apple:
         pygame.draw.rect(screen, (126,166, 114), apple_rect)
         
 class Main:
+
     def __init__(self):
 
         """" Deroulement du jeu """
@@ -65,11 +66,15 @@ class Main:
         self.apple.draw()
         self.snake.draw()
 
-    def checkk_collision(self):
+    def check_collision(self):
  
         """ Verification des collisions """
         if self.apple.pos == self.snake.body[0]:
-            pass
+            x = random.randint(0, number - 1)
+            y = random.randint(0, number - 1)
+            self.apple.pos = Vector2(x, y)
+            self.apple.draw()
+            
 
 UPDATE = pygame.USEREVENT
 pygame.time.set_timer(UPDATE, 150)
@@ -94,6 +99,7 @@ while run:
                 snake.direction = Vector2(0, 1)
     screen.fill((175, 215, 70))
     game.draw_images()
+    game.check_collision()
     pygame.display.update()
     clock.tick(60)
 
