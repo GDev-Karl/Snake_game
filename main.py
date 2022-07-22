@@ -1,4 +1,3 @@
-from email.quoprimime import body_check
 import pygame
 from pygame.math import Vector2
 import random
