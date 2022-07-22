@@ -10,21 +10,109 @@ run = True
 screen = pygame.display.set_mode((number * size, number * size))
 
 class Snake:
+
     def __init__(self):
 
-        """ Serpent"""
-        self.body = [Vector2(5, 10), Vector2(6, 10), Vector2(7, 10)]
+        """ Serpent """
+        self.body = [Vector2(5, 10), Vector2(4, 10), Vector2(3, 10)]
         self.direction = Vector2(1, 0) #indique la direction de deplacement du serpent
         self.add = False
+        self.snake_images()
+
+    def snake_images(self):
+
+        """ initialisation de toutes les images du corps du serpent """
+
+        # differentes positions de la tete
+        self.head_up = pygame.image.load('img/head_up.png').convert_alpha()
+        self.head_up = pygame.transform.scale(self.head_up, (size, size))
+
+        self.head_down = pygame.image.load('img/head_down.png').convert_alpha()
+        self.head_down  = pygame.transform.scale(self.head_down, (size, size))
+
+        self.head_right = pygame.image.load('img/head_right.png').convert_alpha()
+        self.head_right  = pygame.transform.scale(self.head_right, (size, size))
+        
+        self.head_left = pygame.image.load('img/head_left.png').convert_alpha()
+        self.head_left = pygame.transform.scale(self.head_left , (size, size))
+
+        #differetes positions du corps
+        self.body_vertical = pygame.image.load('img/body_vertical.png').convert_alpha()
+        self.body_vertical = pygame.transform.scale(self.body_vertical, (size, size))
+
+        self.body_horizontal = pygame.image.load('img/body_horizontal.png').convert_alpha()
+        self.body_horizontal = pygame.transform.scale(self.body_horizontal, (size, size))
+
+
+        #diffeentes positions da la queue
+        self.tail_up = pygame.image.load('img/tail_up.png').convert_alpha()
+        self.tail_up = pygame.transform.scale(self.tail_up, (size, size))
+
+        self.tail_down = pygame.image.load('img/tail_down.png').convert_alpha()
+        self.tail_down = pygame.transform.scale(self.tail_down, (size, size))
+
+        self.tail_right = pygame.image.load('img/tail_right.png').convert_alpha()
+        self.tail_right = pygame.transform.scale(self.tail_right, (size, size))
+        
+        self.tail_left = pygame.image.load('img/tail_left.png').convert_alpha()
+        self.tail_left = pygame.transform.scale(self.tail_left, (size, size))
+
+
+        #differentes positions du contour
+        self.body_br = pygame.image.load('img/body_br.png').convert_alpha()
+        self.body_br = pygame.transform.scale(self.body_br, (size, size))
+
+        self.body_bl = pygame.image.load('img/body_bl.png').convert_alpha()
+        self.body_bl = pygame.transform.scale(self.body_bl, (size, size))
+
+        self.body_tl = pygame.image.load('img/body_tl.png').convert_alpha()
+        self.body_tl = pygame.transform.scale(self.body_tl, (size, size))
+
+        self.body_tr = pygame.image.load('img/body_tr.png').convert_alpha()
+        self.body_tr = pygame.transform.scale(self.body_tr, (size, size))
+        
 
     def draw(self):
 
         """dessin du serpent"""
-        for block in self.body:
+
+        self.update_tail()
+        self.update_head()
+
+        for index, block in enumerate(self.body):
+            x = block.x * size
+            y = block.y * size
+            snake_rect = pygame.Rect(x, y , size, size)
+
+            if index == 0:
+                screen.blit(self.head, snake_rect)
+            elif index == len(self.body) - 1:
+                screen.blit(self.tail, snake_rect)
+            else:
+                prev_direct = self.body[index + 1] - block #direction du block precedant
+                next_direct = self.body[index - 1] - block # direction du block suivant
+                if prev_direct.x == next_direct.x: # si le block precedant et le suivant sont alignés suivant x
+                    screen.blit(self.body_vertical, snake_rect)
+                elif prev_direct.y == next_direct.y: # si le block precedant et le suivant sont alignés suivant y
+                    screen.blit(self.body_horizontal, snake_rect)
+                else:
+                    if (prev_direct.y == 1 and next_direct.x == 1) or (prev_direct.x == 1 and next_direct.y == 1):
+                        screen.blit(self.body_br, snake_rect)
+                    elif (prev_direct.y == 1 and next_direct.x == -1) or (prev_direct.x == -1 and next_direct.y == 1):
+                        screen.blit(self.body_bl, snake_rect)
+                    elif (prev_direct.y == -1 and next_direct.x == 1) or (prev_direct.x == 1 and next_direct.y == -1):
+                        screen.blit(self.body_tr, snake_rect)
+                    elif (prev_direct.y == -1 and next_direct.x == -1) or (prev_direct.x == -1 and next_direct.y == -1):
+                        screen.blit(self.body_tl, snake_rect)
+                    
+        """
+            for block in self.body:
             x = block.x * size
             y = block.y * size
             snake_rect = pygame.Rect(x, y , size, size)
             pygame.draw.rect(screen, (123, 123, 156), snake_rect)
+        """
+
 
     def move(self):
 
@@ -44,6 +132,32 @@ class Snake:
         """ ajout d'un nouveau block """
         self.add = True
 
+    def update_head(self):
+
+        """ mise a jour de la position de la tete"""
+        if self.direction.x == 1:
+            self.head = self.head_right
+        elif self.direction.x == -1:
+            self.head = self.head_left
+        elif self.direction.y == 1:
+            self.head = self.head_down
+        elif self.direction.y == -1:
+            self.head = self.head_up
+
+    def update_tail(self):
+
+        """ mise a jour de la position de la queue du serpent"""
+        direction = self.body[-2] - self.body[-1] # elle indique la direction dans laquelle se deplace le serpent
+        if direction == Vector2(1, 0):
+            self.tail = self.tail_left
+        elif direction == Vector2(-1, 0):
+            self.tail = self.tail_right
+        elif direction == Vector2(0, 1):
+            self.tail = self.tail_up
+        elif direction == Vector2(0, -1):
+            self.tail = self.tail_down
+
+
 class Apple:  
 
     def __init__(self):
@@ -55,7 +169,9 @@ class Apple:
 
         """ Methode permettant de dessiner la pomme """
         apple_rect = pygame.Rect(self.pos.x * size, self.pos.y * size , size, size)
-        pygame.draw.rect(screen, (126,166, 114), apple_rect)
+        apple = pygame.image.load('img/apple.png').convert_alpha() # chargement de la pomme
+        apple = pygame.transform.scale(apple, (size, size)) #redimensionnement de la pomle
+        screen.blit(apple, apple_rect) 
 
     def ramdomize(self):
         self.x = random.randint(0, number - 1)
