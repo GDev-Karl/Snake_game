@@ -6,6 +6,11 @@ Ensuite double cliquer sur le main.py. Vous devriez voir le jeu s'afficher a l'e
  le joueur dirige un serpent qui grandit et constitue ainsi lui-même un obstacle. Il contrôle un serpent, qui doit s'allonger entre les bords de l'écran. Il doit faire manger à son serpent un certain nombre de pommes, allongeant à chaque fois la taille du serpent. Alors que le serpent avance inexorablement, le joueur ne peut que lui indiquer une direction à suivre (en haut, en bas, à gauche, à droite) afin d'éviter que la tête du serpent ne touche les murs ou son propre corps, auquel cas il risque de mourir.
  
  # __Comment jouer__
- Pour se deplacer le joueur doit utiliser les touches directionnelles du clavier, qui indiquent le sens de déplacement du serpent.
- 
+ Pour se deplacer le joueur doit utiliser les touches directionnelles du clavier, qui indiquent le sens de déplacement du serpent.  
+   
+# __Jeu__
+
+
+
+https://user-images.githubusercontent.com/74557718/182230028-159017ea-a55e-4b49-88d1-485304fef6fd.mp4
 
