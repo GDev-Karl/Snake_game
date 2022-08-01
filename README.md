@@ -12,5 +12,9 @@ Ensuite double cliquer sur le main.py. Vous devriez voir le jeu s'afficher a l'e
 
 
 
-https://user-images.githubusercontent.com/74557718/182230028-159017ea-a55e-4b49-88d1-485304fef6fd.mp4
+
+
+
+https://user-images.githubusercontent.com/74557718/182230364-784a266e-663c-4234-bc31-8884998571a5.mp4
+
 
