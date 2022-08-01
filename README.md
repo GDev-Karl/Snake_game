@@ -1,5 +1,5 @@
 # Installation  
 Pour pouvoir executer le fichier il faut d'abord installer pygame, en ecrivant dans le terminal la commande  
-[commande](pip install pygame)
+lien [commande](pip install pygame)
 
 
